@@ -14,6 +14,7 @@ import java.util.List;
 
 public class PhoneService implements IPhoneService<Phone>{
     private static final String UPDATE_PHONE = "update phone set name=?, price=?, phone_categoryid=?, description=? where id=?";
+    public static final String ADD_PHONE = "insert into phone(name,price,phone_categoryid,description) values (?,?,?,?)";
     Connection connection = ConnectionJDBC.getConnection ();
     ICategoryService categoryService = new CategoryService ();
     private final String SELECT_ALL_PHONE = "select * from phone";
@@ -47,7 +48,7 @@ public class PhoneService implements IPhoneService<Phone>{
     @Override
     public void add(Phone phone, int categoryId) {
         try {
-            PreparedStatement statement = connection.prepareStatement("insert into phone(name,price,phone_categoryid,description) values (?,?,?,?)");
+            PreparedStatement statement = connection.prepareStatement(ADD_PHONE);
             statement.setString(1,phone.getName());
             statement.setInt(2,phone.getPrice());
             statement.setInt(3,categoryId);
@@ -56,7 +57,6 @@ public class PhoneService implements IPhoneService<Phone>{
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
     }
 
     @Override

@@ -3,7 +3,6 @@ package com.example.phone_managers.controller;
 import com.example.phone_managers.model.Phone;
 import com.example.phone_managers.service.phone.PhoneService;
 import com.example.phone_managers.service.phone_category.CategoryService;
-import sun.rmi.server.Dispatcher;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -48,7 +47,7 @@ public class PhoneServlet extends HttpServlet {
             dispatcher = req.getRequestDispatcher ("/");
         }else {
             req.setAttribute ("phone",phone);
-            req.setAttribute ("categorys",categoryService.fillAll ());
+            req.setAttribute ("categorys",categoryService.findAll ());
             dispatcher = req.getRequestDispatcher ("phone/delete.jsp");
         }
         try {
@@ -69,7 +68,7 @@ public class PhoneServlet extends HttpServlet {
         dispatcher = req.getRequestDispatcher ("error-404.jsp");
     }else {
         req.setAttribute ("phone",phone);
-        req.setAttribute ("categorys",categoryService.fillAll ());
+        req.setAttribute ("categorys",categoryService.findAll ());
         dispatcher = req.getRequestDispatcher ("phone/edit.jsp");
     }
         try {
@@ -84,7 +83,7 @@ public class PhoneServlet extends HttpServlet {
     private void listPhone(HttpServletRequest req, HttpServletResponse resp) {
     List<Phone> phoneList = phoneService.findAll ();
     req.setAttribute ("phoneList",phoneList);
-    req.setAttribute ("categorys",categoryService.fillAll());
+    req.setAttribute ("categorys",categoryService.findAll ());
         RequestDispatcher dispatcher = req.getRequestDispatcher ("phone/index.jsp");
         try {
             dispatcher.forward (req,resp);
@@ -96,7 +95,7 @@ public class PhoneServlet extends HttpServlet {
     }
     private void showFormCreate(HttpServletRequest req, HttpServletResponse resp) {
         RequestDispatcher dispatcher = req.getRequestDispatcher("phone/create.jsp");
-        req.setAttribute("category",categoryService.fillAll());
+        req.setAttribute("category",categoryService.findAll ());
         try {
             dispatcher.forward(req,resp);
         } catch (ServletException e) {

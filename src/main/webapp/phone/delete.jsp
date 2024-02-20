@@ -23,7 +23,7 @@
       <option value="${c.id}">${c.name}</option>
     </c:forEach>
   </select>
-  <input value="submit" type="submit">
+  <input value="delete" type="submit">
 </form>
 </body>
 </html>
