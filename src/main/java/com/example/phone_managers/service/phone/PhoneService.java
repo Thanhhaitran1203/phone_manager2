@@ -13,9 +13,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PhoneService implements IPhoneService<Phone>{
+    private static final String UPDATE_PHONE = "update phone set name=?, price=?, phone_categoryid=?, description=? where id=?";
     Connection connection = ConnectionJDBC.getConnection ();
     ICategoryService categoryService = new CategoryService ();
     private final String SELECT_ALL_PHONE = "select * from phone";
+    private final String FIND_PHONE_BY_ID = "select * from phone where id=?";
+    private final String REMOVE_PHONE_BY_ID = "delete from phone where id=?";
 
 
     @Override
@@ -31,8 +34,7 @@ public class PhoneService implements IPhoneService<Phone>{
                 String img = resultSet.getString ("img");
                 int phoneCategoryId = resultSet.getInt ("phone_categoryid");
                 String description = resultSet.getString ("description");
-                String phoneCategory = categoryService.findCategoryById (phoneCategoryId);
-                phoneList.add (new Phone (id,name,price,img,phoneCategory,description));
+                phoneList.add (new Phone (id,name,price,img,phoneCategoryId,description));
             }
 
         } catch (SQLException e) {
@@ -58,12 +60,38 @@ public class PhoneService implements IPhoneService<Phone>{
 
     @Override
     public Phone findById(int id) {
-        return null;
+        Phone phone = null;
+        try {
+            PreparedStatement statement = connection.prepareStatement (FIND_PHONE_BY_ID);
+            statement.setInt (1,id);
+            ResultSet resultSet = statement.executeQuery ();
+            while (resultSet.next ()){
+                String name = resultSet.getString ("name");
+                int price = resultSet.getInt ("price");
+                String img = resultSet.getString ("img");
+                int phoneCategoryId = resultSet.getInt ("phone_categoryid");
+                String description = resultSet.getString ("description");
+                phone = new Phone (id,name,price,img,phoneCategoryId,description);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException (e);
+        }
+        return phone;
     }
 
     @Override
     public void update(int id, Phone phone) {
-
+        try {
+            PreparedStatement statement = connection.prepareStatement (UPDATE_PHONE);
+            statement.setString (1,phone.getName ());
+            statement.setInt (2,phone.getPrice ());
+            statement.setInt (3,phone.getPhoneCategoryId ());
+            statement.setString (4, phone.getDescription ());
+            statement.setInt (5,id);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException (e);
+        }
     }
 
     @Override

@@ -21,14 +21,23 @@
 <%--            <td>Img</td>--%>
             <td>Phone Category</td>
             <td>Decriptiom</td>
+            <td></td>
+            <td></td>
         </tr>
         <c:forEach items='${requestScope["phoneList"]}' var="phone">
             <tr>
                 <td>${phone.getName()}</td>
                 <td>${phone.getPrice()}</td>
 <%--                <td><img src="${phone.getImg}"></td>--%>
-                <td>${phone.getPhoneCategory()}</td>
+                <c:forEach items='${requestScope["categorys"]}' var="category">
+                    <c:if test="${phone.getPhoneCategoryId() == category.getId()}">
+                        <td>${category.getName()}</td>
+                    </c:if>
+
+                </c:forEach>
                 <td>${phone.getDescription()}</td>
+                <td><a href="/phone?action=edit&id=${phone.getId()}">Edit</a></td>
+                <td><a href="/phone?action=delete&id=${phone.getId()}">Delete</a></td>
             </tr>
         </c:forEach>
     </table>

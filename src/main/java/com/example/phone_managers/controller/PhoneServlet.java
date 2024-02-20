@@ -29,15 +29,39 @@ public class PhoneServlet extends HttpServlet {
             case "create":
                 showFormCreate(req,resp);
                 break;
+            case "edit":
+                showEditForm(req,resp);
+                break;
             default:
                 listPhone(req,resp);
                 break;
         }
     }
 
+    private void showEditForm(HttpServletRequest req, HttpServletResponse resp) {
+    int id = Integer.parseInt (req.getParameter ("id"));
+    Phone phone = phoneService.findById (id);
+    RequestDispatcher dispatcher;
+    if (phone == null){
+        dispatcher = req.getRequestDispatcher ("error-404.jsp");
+    }else {
+        req.setAttribute ("phone",phone);
+        req.setAttribute ("categorys",categoryService.fillAll ());
+        dispatcher = req.getRequestDispatcher ("phone/edit.jsp");
+    }
+        try {
+            dispatcher.forward (req,resp);
+        } catch (ServletException e) {
+            throw new RuntimeException (e);
+        } catch (IOException e) {
+            throw new RuntimeException (e);
+        }
+    }
+
     private void listPhone(HttpServletRequest req, HttpServletResponse resp) {
     List<Phone> phoneList = phoneService.findAll ();
     req.setAttribute ("phoneList",phoneList);
+    req.setAttribute ("categorys",categoryService.fillAll());
         RequestDispatcher dispatcher = req.getRequestDispatcher ("phone/index.jsp");
         try {
             dispatcher.forward (req,resp);
@@ -69,11 +93,40 @@ public class PhoneServlet extends HttpServlet {
             case "create":
                 createNewPhone(req,resp);
                 break;
+            case "edit":
+                updatePhone(req,resp);
+                break;
             default:
                 listPhone(req,resp);
                 break;
         }
     }
+
+    private void updatePhone(HttpServletRequest req, HttpServletResponse resp) {
+    int id = Integer.parseInt (req.getParameter ("id"));
+    String name = req.getParameter ("name");
+    int price = Integer.parseInt (req.getParameter ("price"));
+    int phoneCategoryId = Integer.parseInt (req.getParameter ("category"));
+    String description = req.getParameter ("description");
+    Phone phone = phoneService.findById (id);
+    RequestDispatcher dispatcher;
+    if (phone == null){
+        dispatcher = req.getRequestDispatcher ("/");
+    }else {
+        phone.setName (name);
+        phone.setPrice (price);
+        phone.setPhoneCategoryId (phoneCategoryId);
+        phone.setDescription (description);
+        phoneService.update (id,phone);
+        try {
+            resp.sendRedirect ("/phone");
+        } catch (IOException e) {
+            throw new RuntimeException (e);
+        }
+    }
+
+    }
+
     private void createNewPhone(HttpServletRequest req, HttpServletResponse resp) {
         String name = req.getParameter("name");
         int price = Integer.parseInt(req.getParameter("price"));

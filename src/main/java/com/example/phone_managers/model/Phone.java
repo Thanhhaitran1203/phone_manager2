@@ -5,7 +5,7 @@ public class Phone {
     private  String name;
     private int price;
     private String img;
-    private String phoneCategory;
+    private int phoneCategoryId;
     private String description;
 
     public Phone() {
@@ -17,6 +17,13 @@ public class Phone {
         this.description = description;
     }
 
+    public Phone(String name, int price, int phoneCategoryId, String description) {
+        this.name = name;
+        this.price = price;
+        this.phoneCategoryId = phoneCategoryId;
+        this.description = description;
+    }
+
     public Phone(int id, String name, int price, String img, String description) {
         this.id = id;
         this.name = name;
@@ -25,12 +32,12 @@ public class Phone {
         this.description = description;
     }
 
-    public Phone(int id, String name, int price, String img, String phoneCategory, String description) {
+    public Phone(int id, String name, int price, String img, int phoneCategoryId, String description) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.img = img;
-        this.phoneCategory = phoneCategory;
+        this.phoneCategoryId = phoneCategoryId;
         this.description = description;
     }
 
@@ -66,12 +73,12 @@ public class Phone {
         this.img = img;
     }
 
-    public String getPhoneCategory() {
-        return phoneCategory;
+    public int getPhoneCategoryId() {
+        return phoneCategoryId;
     }
 
-    public void setPhoneCategory(String phoneCategory) {
-        this.phoneCategory = phoneCategory;
+    public void setPhoneCategoryId(int phoneCategoryId) {
+        this.phoneCategoryId = phoneCategoryId;
     }
 
     public String getDescription() {
