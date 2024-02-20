@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PhoneService implements IPhoneService{
+public class PhoneService implements IPhoneService<Phone>{
     Connection connection = ConnectionJDBC.getConnection ();
     ICategoryService categoryService = new CategoryService ();
     private final String SELECT_ALL_PHONE = "select * from phone";
@@ -42,17 +42,27 @@ public class PhoneService implements IPhoneService{
     }
 
     @Override
-    public void add(Object o, int categoryId) {
+    public void add(Phone phone, int categoryId) {
+        try {
+            PreparedStatement statement = connection.prepareStatement("insert into phone(name,price,phone_categoryid,description) values (?,?,?,?)");
+            statement.setString(1,phone.getName());
+            statement.setInt(2,phone.getPrice());
+            statement.setInt(3,categoryId);
+            statement.setString(4, phone.getDescription());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 
     @Override
-    public Object findById(int id) {
+    public Phone findById(int id) {
         return null;
     }
 
     @Override
-    public void update(int id, Object o) {
+    public void update(int id, Phone phone) {
 
     }
 

@@ -11,6 +11,12 @@ public class Phone {
     public Phone() {
     }
 
+    public Phone(String name, int price, String description) {
+        this.name = name;
+        this.price = price;
+        this.description = description;
+    }
+
     public Phone(int id, String name, int price, String img, String description) {
         this.id = id;
         this.name = name;

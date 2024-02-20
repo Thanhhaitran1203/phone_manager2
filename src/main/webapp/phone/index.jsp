@@ -13,6 +13,7 @@
 </head>
 <body>
     <h1>Phone Store</h1>
+    <a href="/phone?action=create">Create new phone</a>
     <table border="1px">
         <tr>
             <td>Name</td>
