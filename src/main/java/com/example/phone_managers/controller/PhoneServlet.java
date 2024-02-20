@@ -32,10 +32,33 @@ public class PhoneServlet extends HttpServlet {
             case "edit":
                 showEditForm(req,resp);
                 break;
+            case "delete":
+                showDeleteForm (req,resp);
             default:
                 listPhone(req,resp);
                 break;
         }
+    }
+
+    private void showDeleteForm(HttpServletRequest req, HttpServletResponse resp) {
+        int id = Integer.parseInt (req.getParameter ("id"));
+        Phone phone = phoneService.findById (id);
+        RequestDispatcher dispatcher;
+        if (phone == null){
+            dispatcher = req.getRequestDispatcher ("/");
+        }else {
+            req.setAttribute ("phone",phone);
+            req.setAttribute ("categorys",categoryService.fillAll ());
+            dispatcher = req.getRequestDispatcher ("phone/delete.jsp");
+        }
+        try {
+            dispatcher.forward (req,resp);
+        } catch (ServletException e) {
+            throw new RuntimeException (e);
+        } catch (IOException e) {
+            throw new RuntimeException (e);
+        }
+
     }
 
     private void showEditForm(HttpServletRequest req, HttpServletResponse resp) {
@@ -96,9 +119,27 @@ public class PhoneServlet extends HttpServlet {
             case "edit":
                 updatePhone(req,resp);
                 break;
+            case "delete":
+                deletePhone(req,resp);
             default:
                 listPhone(req,resp);
                 break;
+        }
+    }
+
+    private void deletePhone(HttpServletRequest req, HttpServletResponse resp) {
+    int id = Integer.parseInt (req.getParameter ("id"));
+    Phone phone =phoneService.findById (id);
+    RequestDispatcher requestDispatcher;
+    if (phone == null){
+        requestDispatcher =req.getRequestDispatcher ("/");
+    }else {
+        phoneService.delete (id);
+//        try {
+//            resp.sendRedirect ("/phone");
+//        } catch (IOException e) {
+//            throw new RuntimeException (e);
+//        }
         }
     }
 

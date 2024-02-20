@@ -18,7 +18,7 @@ public class PhoneService implements IPhoneService<Phone>{
     ICategoryService categoryService = new CategoryService ();
     private final String SELECT_ALL_PHONE = "select * from phone";
     private final String FIND_PHONE_BY_ID = "select * from phone where id=?";
-    private final String REMOVE_PHONE_BY_ID = "delete from phone where id=?";
+    private final String REMOVE_PHONE_BY_ID = "update phone set display=0 where id=?";
 
 
     @Override
@@ -34,7 +34,8 @@ public class PhoneService implements IPhoneService<Phone>{
                 String img = resultSet.getString ("img");
                 int phoneCategoryId = resultSet.getInt ("phone_categoryid");
                 String description = resultSet.getString ("description");
-                phoneList.add (new Phone (id,name,price,img,phoneCategoryId,description));
+                int display = resultSet.getInt ("display");
+                phoneList.add (new Phone (id,name,price,img,phoneCategoryId,description,display));
             }
 
         } catch (SQLException e) {
@@ -96,6 +97,12 @@ public class PhoneService implements IPhoneService<Phone>{
 
     @Override
     public void delete(int id) {
-
+        try {
+            PreparedStatement statement =connection.prepareStatement (REMOVE_PHONE_BY_ID);
+            statement.setInt (1,id);
+            statement.executeUpdate ();
+        } catch (SQLException e) {
+            throw new RuntimeException (e);
+        }
     }
 }

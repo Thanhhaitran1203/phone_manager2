@@ -25,7 +25,8 @@
             <td></td>
         </tr>
         <c:forEach items='${requestScope["phoneList"]}' var="phone">
-            <tr>
+            <c:if test="${phone.getDisplay() == 1}">
+                <tr>
                 <td>${phone.getName()}</td>
                 <td>${phone.getPrice()}</td>
 <%--                <td><img src="${phone.getImg}"></td>--%>
@@ -33,12 +34,12 @@
                     <c:if test="${phone.getPhoneCategoryId() == category.getId()}">
                         <td>${category.getName()}</td>
                     </c:if>
-
                 </c:forEach>
                 <td>${phone.getDescription()}</td>
                 <td><a href="/phone?action=edit&id=${phone.getId()}">Edit</a></td>
                 <td><a href="/phone?action=delete&id=${phone.getId()}">Delete</a></td>
-            </tr>
+                </tr>
+            </c:if>
         </c:forEach>
     </table>
 </body>

@@ -7,6 +7,7 @@ public class Phone {
     private String img;
     private int phoneCategoryId;
     private String description;
+    private int display;
 
     public Phone() {
     }
@@ -15,6 +16,14 @@ public class Phone {
         this.name = name;
         this.price = price;
         this.description = description;
+    }
+
+    public Phone(String name, int price, int phoneCategoryId, String description, int display) {
+        this.name = name;
+        this.price = price;
+        this.phoneCategoryId = phoneCategoryId;
+        this.description = description;
+        this.display = display;
     }
 
     public Phone(String name, int price, int phoneCategoryId, String description) {
@@ -39,6 +48,33 @@ public class Phone {
         this.img = img;
         this.phoneCategoryId = phoneCategoryId;
         this.description = description;
+    }
+
+    public Phone(int id, String name, int price, int phoneCategoryId, String description, int display) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.phoneCategoryId = phoneCategoryId;
+        this.description = description;
+        this.display = display;
+    }
+
+    public Phone(int id, String name, int price, String img, int phoneCategoryId, String description, int display) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.img = img;
+        this.phoneCategoryId = phoneCategoryId;
+        this.description = description;
+        this.display = display;
+    }
+
+    public int getDisplay() {
+        return display;
+    }
+
+    public void setDisplay(int display) {
+        this.display = display;
     }
 
     public int getId() {
