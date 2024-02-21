@@ -2,8 +2,8 @@ package com.example.phone_managers.service.phone;
 
 import com.example.phone_managers.config.ConnectionJDBC;
 import com.example.phone_managers.model.Phone;
+import com.example.phone_managers.service.IService;
 import com.example.phone_managers.service.phone_category.CategoryService;
-import com.example.phone_managers.service.phone_category.ICategoryService;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,11 +12,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PhoneService implements IPhoneService<Phone>{
+public class PhoneService implements IService<Phone>{
     private static final String UPDATE_PHONE = "update phone set name=?, price=?, phone_categoryid=?, description=? where id=?";
     public static final String ADD_PHONE = "insert into phone(name,price,phone_categoryid,description) values (?,?,?,?)";
     Connection connection = ConnectionJDBC.getConnection ();
-    ICategoryService categoryService = new CategoryService ();
+    IService categoryService = new CategoryService ();
     private final String SELECT_ALL_PHONE = "select * from phone";
     private final String FIND_PHONE_BY_ID = "select * from phone where id=?";
     private final String REMOVE_PHONE_BY_ID = "update phone set display=0 where id=?";
@@ -46,12 +46,12 @@ public class PhoneService implements IPhoneService<Phone>{
     }
 
     @Override
-    public void add(Phone phone, int categoryId) {
+    public void add(Phone phone) {
         try {
             PreparedStatement statement = connection.prepareStatement(ADD_PHONE);
             statement.setString(1,phone.getName());
             statement.setInt(2,phone.getPrice());
-            statement.setInt(3,categoryId);
+            statement.setInt(3,phone.getPhoneCategoryId ());
             statement.setString(4, phone.getDescription());
             statement.executeUpdate();
         } catch (SQLException e) {

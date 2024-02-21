@@ -1,12 +1,11 @@
-package com.example.phone_managers.service.phone;
+package com.example.phone_managers.service;
 
 import java.util.List;
 
-public interface IPhoneService<T> {
+public interface IService<T> {
     List<T> findAll();
-    void add(T t,int categoryId);
+    void add(T t);
     T findById(int id);
     void update(int id,T t);
-
     void delete(int id);
 }

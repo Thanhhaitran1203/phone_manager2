@@ -9,10 +9,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
 <head>
-    <title>Phone Store</title>
+    <title>Phone Manager</title>
 </head>
 <body>
-    <h1>Phone Store</h1>
+    <h1>Phone Manager</h1>
     <a href="/phone?action=create">Create new phone</a>
     <table border="1px">
         <tr>

@@ -5,8 +5,17 @@ public class User {
     private String name;
     private int phoneNumber;
     private String address;
+    private int display;
 
     public User() {
+    }
+
+    public User(int id, String name, int phoneNumber, String address, int display) {
+        this.id = id;
+        this.name = name;
+        this.phoneNumber = phoneNumber;
+        this.address = address;
+        this.display = display;
     }
 
     public User(int id, String name, int phoneNumber, String address) {
@@ -14,6 +23,20 @@ public class User {
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.address = address;
+    }
+
+    public User(String name, int phoneNumber, String address) {
+        this.name = name;
+        this.phoneNumber = phoneNumber;
+        this.address = address;
+    }
+
+    public int getDisplay() {
+        return display;
+    }
+
+    public void setDisplay(int display) {
+        this.display = display;
     }
 
     public int getId() {

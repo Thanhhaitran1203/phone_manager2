@@ -172,8 +172,8 @@ public class PhoneServlet extends HttpServlet {
         int price = Integer.parseInt(req.getParameter("price"));
         String description = req.getParameter("description");
         int categoryId = Integer.parseInt(req.getParameter("category"));
-        Phone phone = new Phone(name,price,description);
-        phoneService.add(phone,categoryId);
+        Phone phone = new Phone(name,price,categoryId,description);
+        phoneService.add(phone);
         try {
             resp.sendRedirect ("/phone");
         } catch (IOException e) {

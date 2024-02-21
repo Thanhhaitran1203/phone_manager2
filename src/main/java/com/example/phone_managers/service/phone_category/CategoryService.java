@@ -2,6 +2,7 @@ package com.example.phone_managers.service.phone_category;
 
 import com.example.phone_managers.config.ConnectionJDBC;
 import com.example.phone_managers.model.PhoneCategory;
+import com.example.phone_managers.service.IService;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,7 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CategoryService implements ICategoryService<PhoneCategory> {
+public class CategoryService implements IService<PhoneCategory> {
     private static final String ADD_CATEGORY = "insert into phone_category(name) value(?);";
     private static final String FIND_PHONECATEGORY_BY_ID = "select * from phone_category where id=?";
     Connection connection = ConnectionJDBC.getConnection ();
@@ -88,7 +89,6 @@ public class CategoryService implements ICategoryService<PhoneCategory> {
         }
     }
 
-    @Override
     public String findCategoryById(int phone_id) {
         String category = "";
         try {
