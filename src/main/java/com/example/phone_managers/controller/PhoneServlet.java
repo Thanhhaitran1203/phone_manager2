@@ -33,6 +33,7 @@ public class PhoneServlet extends HttpServlet {
                 break;
             case "delete":
                 showDeleteForm (req,resp);
+                break;
             default:
                 listPhone(req,resp);
                 break;
@@ -120,6 +121,7 @@ public class PhoneServlet extends HttpServlet {
                 break;
             case "delete":
                 deletePhone(req,resp);
+                break;
             default:
                 listPhone(req,resp);
                 break;
@@ -134,11 +136,11 @@ public class PhoneServlet extends HttpServlet {
         requestDispatcher =req.getRequestDispatcher ("/");
     }else {
         phoneService.delete (id);
-//        try {
-//            resp.sendRedirect ("/phone");
-//        } catch (IOException e) {
-//            throw new RuntimeException (e);
-//        }
+        try {
+            resp.sendRedirect ("/phone");
+        } catch (IOException e) {
+            throw new RuntimeException (e);
+        }
         }
     }
 
