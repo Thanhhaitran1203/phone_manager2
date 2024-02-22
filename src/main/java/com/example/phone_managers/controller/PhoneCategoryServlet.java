@@ -29,7 +29,8 @@ public class PhoneCategoryServlet extends HttpServlet {
                 showEditForm(req,resp);
                 break;
             case "delete":
-                showDeleteForm (req,resp);
+                deleteCategory (req,resp);
+                break;
             default:
                 listPhoneCategory(req,resp);
                 break;
@@ -43,7 +44,7 @@ public class PhoneCategoryServlet extends HttpServlet {
             dispatcher = req.getRequestDispatcher ("/");
         }else {
             req.setAttribute ("phoneCategory",phoneCategory);
-            dispatcher = req.getRequestDispatcher ("category/edit.jsp");
+            dispatcher = req.getRequestDispatcher ("category/delete.jsp");
         }
         try {
             dispatcher.forward (req,resp);
@@ -108,6 +109,7 @@ public class PhoneCategoryServlet extends HttpServlet {
                 break;
             case "delete":
                 deleteCategory(req,resp);
+                break;
             default:
                 listPhoneCategory(req,resp);
                 break;
@@ -116,11 +118,16 @@ public class PhoneCategoryServlet extends HttpServlet {
     private void deleteCategory(HttpServletRequest req, HttpServletResponse resp) {
         int id = Integer.parseInt (req.getParameter ("id"));
         PhoneCategory phoneCategory = categoryService.findById (id);
-        categoryService.delete (id);
-        try {
-            resp.sendRedirect ("/category");
-        } catch (IOException e) {
-            throw new RuntimeException (e);
+        RequestDispatcher requestDispatcher;
+        if (phoneCategory == null){
+            requestDispatcher =req.getRequestDispatcher ("/");
+        }else {
+            categoryService.delete (id);
+            try {
+                resp.sendRedirect ("/category");
+            } catch (IOException e) {
+                throw new RuntimeException (e);
+            }
         }
     }
     private void updateCategory(HttpServletRequest req, HttpServletResponse resp) {

@@ -32,7 +32,7 @@ public class PhoneServlet extends HttpServlet {
                 showEditForm(req,resp);
                 break;
             case "delete":
-                showDeleteForm (req,resp);
+                deletePhone (req,resp);
                 break;
             default:
                 listPhone(req,resp);

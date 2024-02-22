@@ -30,9 +30,10 @@ public class UserServlet extends HttpServlet {
                 showEditForm(req,resp);
                 break;
             case "delete":
-                showDeleteForm (req,resp);
+                deleteUser (req,resp);
+                break;
             default:
-                listPhone(req,resp);
+                listUser(req,resp);
                 break;
         }
     }
@@ -76,7 +77,7 @@ public class UserServlet extends HttpServlet {
         }
     }
 
-    private void listPhone(HttpServletRequest req, HttpServletResponse resp) {
+    private void listUser(HttpServletRequest req, HttpServletResponse resp) {
         List<User> userList = userService.findAll ();
         req.setAttribute ("userList",userList);
         RequestDispatcher dispatcher = req.getRequestDispatcher ("user/index.jsp");
@@ -114,8 +115,9 @@ public class UserServlet extends HttpServlet {
                 break;
             case "delete":
                 deleteUser(req,resp);
+                break;
             default:
-                listPhone(req,resp);
+                listUser(req,resp);
                 break;
         }
     }
@@ -128,11 +130,11 @@ public class UserServlet extends HttpServlet {
             requestDispatcher =req.getRequestDispatcher ("/");
         }else {
             userService.delete (id);
-//        try {
-//            resp.sendRedirect ("/phone");
-//        } catch (IOException e) {
-//            throw new RuntimeException (e);
-//        }
+        try {
+            resp.sendRedirect ("/user");
+        } catch (IOException e) {
+            throw new RuntimeException (e);
+        }
         }
     }
 
